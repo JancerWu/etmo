@@ -146,7 +146,7 @@ public class BinaryReal extends Binary {
 	 * This implementation is efficient for binary string of length up to 24
 	 * bits, and for positive intervals.
 	 * 
-	 * @see momfo.core.Variable#setValue(double)
+	 * @see etmo.core.Variable#setValue(double)
 	 * 
 	 *      Contributor: jl hippolyte
 	 */
