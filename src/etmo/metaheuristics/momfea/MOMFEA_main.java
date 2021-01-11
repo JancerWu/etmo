@@ -30,7 +30,7 @@ public class MOMFEA_main {
 		
 		HashMap parameters; // Operator parameters
 
-		problemSet = ETMOF3.getProblem();
+		problemSet = ETMOF1.getProblem();
 		int taskNumber = problemSet.size();
 		System.out.println("taskNumber = "+taskNumber);
 		String pf = "PF/StaticPF/" + problemSet.get(0).getHType() + "_" + problemSet.get(0).getNumberOfObjectives() + "D.pf";
@@ -67,11 +67,12 @@ public class MOMFEA_main {
 		
 		System.out.println("RunID\t" + "IGD for "+problemSet.get(0).getName()+" to "+problemSet.get(taskNumber-1).getName());
 		
-		int times = 1;
+		int times = 21;
 		
 		double ave[] = new double[taskNumber];
-		for (int t = 1; t <= times; t++) {	
+		for (int t = 1; t <= times; t++) {
 			SolutionSet population = algorithm.execute();
+
 			SolutionSet[] resPopulation = new SolutionSet[problemSet.size()];
 			for (int i = 0; i < problemSet.size(); i++)
 				resPopulation[i] = new SolutionSet();
@@ -91,15 +92,26 @@ public class MOMFEA_main {
 
 				resPopulation[pid].add(newSolution);
 			}
+
+			//测试种群中不同任务的个体数量
+			for (int i = 0; i < problemSet.size(); i++){
+				System.out.print(i+":"+resPopulation[i].size()+"\t");
+			}
+			System.out.println("");
+
 			
 			double igd;
 			System.out.print(t + "\t");
-			for(int i=0;i<taskNumber;i++){
+			for(int i = 0; i < taskNumber; i++){
 				QualityIndicator indicator = new QualityIndicator(problemSet.get(i), pf);
 				if(resPopulation[i].size()==0)
 					continue;
-				resPopulation[i].printObjectivesToFile("MOMFEA_"+problemSet.getTask(i).get(0).getNumberOfObjectives()+"Obj_"+
-						problemSet.getTask(i).get(0).getName()+ "_" + problemSet.getTask(i).get(0).getNumberOfVariables() + "D_run"+t+".txt");
+//				getTask中用到add影响problem起始和结束值
+//				resPopulation[i].printObjectivesToFile("MOMFEA_"+problemSet.getTask(i).get(0).getNumberOfObjectives()+"Obj_"+
+//						problemSet.getTask(i).get(0).getName()+ "_" + problemSet.getTask(i).get(0).getNumberOfVariables() + "D_run"+t+".txt");
+				resPopulation[i].printObjectivesToFile("MOMFEA_"+problemSet.get(i).getNumberOfObjectives()+"Obj_"+
+						problemSet.get(i).getName()+ "_" + problemSet.get(i).getNumberOfVariables() + "D_run"+t+".txt");
+
 				igd =  indicator.getIGD(resPopulation[i]);
 				System.out.print(form.format(igd) + "\t" );
 				ave[i] += igd;

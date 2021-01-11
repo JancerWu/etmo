@@ -58,7 +58,7 @@ public abstract class Problem implements Serializable {
 	protected int problemIndex_ = 0;
 
 	
-	protected int startObjPos_;
+	protected int  startObjPos_;
 	protected int endObjPos_;
 	protected String hType_; //The type of the shape function
 

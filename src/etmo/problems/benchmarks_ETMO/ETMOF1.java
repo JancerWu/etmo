@@ -59,7 +59,8 @@ public class ETMOF1 {
 		prob.setRotationMatrix(matrix);
 		((Problem)prob).setName("ETOMF1_2");
 		
-		problemSet.add(prob);
+		problemSet.add(prob);//add中修改start和end值
+
 		return problemSet;
 	}
 }
